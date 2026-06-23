@@ -45,6 +45,7 @@ import { FullAnalysisResult } from '@/utils/gemini'
 
 export default function AppMain() {
   const [mounted, setMounted] = useState(false)
+  const [showPreloader, setShowPreloader] = useState(true)
   const [file, setFile] = useState<File | null>(null)
   const [jobDescription, setJobDescription] = useState('')
   const [isDragActive, setIsDragActive] = useState(false)
@@ -83,6 +84,10 @@ export default function AppMain() {
 
   useEffect(() => {
     setMounted(true)
+    const timer = setTimeout(() => {
+      setShowPreloader(false)
+    }, 1500)
+    return () => clearTimeout(timer)
   }, [])
 
   // Trigger celebration on report update if match is strong
@@ -302,6 +307,59 @@ export default function AppMain() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      
+      {/* Dynamic Preloader */}
+      <AnimatePresence>
+        {showPreloader && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="fixed inset-0 z-50 bg-slate-50 flex flex-col items-center justify-center no-print"
+          >
+            <div className="text-center space-y-6 max-w-xs w-full px-4">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: [0.8, 1.05, 1], opacity: 1 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                className="relative w-24 h-24 mx-auto"
+              >
+                <div className="absolute inset-0 rounded-2xl bg-blue-500/10 blur-xl animate-pulse" />
+                <img src="/logo.png" alt="ResumeIQ Logo" className="w-24 h-24 rounded-2xl object-contain shadow-xl shadow-blue-500/10 border border-blue-500/10 relative z-10" />
+              </motion.div>
+              
+              <div className="space-y-1.5">
+                <motion.h2 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="text-xl font-black text-slate-800 tracking-tight"
+                >
+                  ResumeIQ <span className="text-blue-600">AI</span>
+                </motion.h2>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  className="text-[10px] font-bold uppercase tracking-wider text-slate-400"
+                >
+                  Smart ATS Matching Engine
+                </motion.p>
+              </div>
+
+              {/* Premium progress bar */}
+              <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden relative">
+                <motion.div 
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.3, ease: 'easeInOut' }}
+                  className="h-full bg-gradient-to-r from-blue-600 to-sky-400 rounded-full"
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       {/* Dynamic Header */}
       <header className="sticky top-0 z-40 backdrop-blur-md border-b border-blue-500/10 bg-white/70 no-print">

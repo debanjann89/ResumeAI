@@ -16,15 +16,22 @@ export const metadata: Metadata = {
   title: "ResumeIQ AI - Beat the ATS, Land More Interviews",
   description: "Upload your resume, match it against any job description, and receive recruiter-grade ATS insights powered by AI.",
   keywords: ["ATS resume checker", "ATS optimization", "AI resume builder", "resume scorer", "skills gap analysis"],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "ResumeIQ AI - Beat the ATS, Land More Interviews",
     description: "Get recruiter-grade ATS insights and score evaluations powered by Gemini AI.",
     type: "website",
+    images: ["/logo.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "ResumeIQ AI - Beat the ATS, Land More Interviews",
     description: "Match your resume against any job description with instant AI feedback.",
+    images: ["/logo.png"],
   },
 };
 
